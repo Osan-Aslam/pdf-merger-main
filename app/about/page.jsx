@@ -19,7 +19,7 @@ function page() {
           }
         });
         const content = response.data?.data?.contentDict?.key_0 ?? '';
-        const fixedHtml = content.replace(/classname=/g, 'class=').replace(/{"\s*"}/g, ' ');
+        const fixedHtml = content.replace(/\bclassname=/g, 'class=').replace(/{"\s*"}/g, ' ');
         setRawHtml(fixedHtml);
         console.log("Response Data for pages: ", response.data);
       } catch (error) {

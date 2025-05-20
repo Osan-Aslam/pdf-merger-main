@@ -7,7 +7,7 @@ function page() {
   const [apiResponse, setApiResponse] = useState(null);
     const path = usePathname();
   
-    let rawHtml = apiResponse?.data?.contentDict?.key_1?.replace(/classname=/g, "class=").replace(/{"\s*"}/g, ' ');
+    let rawHtml = apiResponse?.data?.contentDict?.key_1?.replace(/\bclassname=/g, "className=").replace(/{"\s*"}/g, ' ');
   
     //axios request to api
     useEffect(() => {
