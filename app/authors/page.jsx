@@ -1,44 +1,74 @@
 "use client";
-import axios from 'axios';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import { fetchPageContent } from '../utils/fetchPageContent';
+import placeholderImage from '../../public/placeholder-image.svg';
+import Image from 'next/image';
+import Link from 'next/link';
 
-function page() {
-  const [apiResponse, setApiResponse] = useState(null);
+function Author() {
   const path = usePathname();
+  const [authors, setAuthors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  let rawHtml = apiResponse?.data?.contentDict?.key_0?.replace(/classname=/g, "class=").replace(/{"\s*"}/g, ' ');
-
-  //axios request to api
   useEffect(() => {
-    const fetchHomePage = async () => {
+    const loadContent = async () => {
+      const slug = path === '/' ? 'home' : path.replace('/', '');
       try {
-        const slug = path === "/" ? "home" : path.replace("/", "");
-        const response = await axios.get(`http://localhost:5089/api/page/${slug}`, {
-          headers: {
-            "Accept": "application/json",
-          }
-        });
-        setApiResponse(response.data);
-        console.log("Response Data for pages: ", response.data);
-      } catch (error) {
-        console.error("Error while fetching page: ", error);
+        const response = await fetchPageContent(slug);
+        const authorList = response?.data?.authors || [];
+        console.log(response);
+        setAuthors(authorList);
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError('Error loading blog posts');
+      } finally {
+        setLoading(false);
       }
-    }
-    fetchHomePage();
-  }, []);
+    };
+
+    loadContent();
+  }, [path]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error loading page content</p>;
   return (
     <div>
       <div className='mb-[40px] mt-[10px]'>
         <h1 className='lg:text-[35px] text-[15px] font-extrabold text-center'>Authors</h1>
       </div>
-      {rawHtml ? (
-        <div dangerouslySetInnerHTML={{ __html: rawHtml }}/>
-      ) : (
-        <p></p>
-      )}
+      <div className='px-[50px] flex flex-wrap justify-center'>
+        {
+          authors.length === 0 ? (
+            <p>No Author Found</p>
+          ) : (
+            authors.map((author, index) => (
+              <div key={index} className="w-full lg:w-[30%] md:w-1/3 mb-4 me-4">
+                <div className="bg-[#ededf4] rounded-md shadow p-4 hover:shadow-md transition duration-300">
+                  <Link href={author.canonical} className="flex items-center space-x-4">
+                    <div className="w-1/3">
+                      <div className="w-full h-24 rounded-full overflow-hidden bg-gray-100">
+                        <Image src={author?.asset?.url || placeholderImage} alt="Evelyn Lucas" width={40} height={40} className="w-full h-full object-contain" />
+                      </div>
+                    </div>
+                    <div className="w-2/3">
+                      <span className="text-sm text-gray-500">{new Date(author.createdDate).toLocaleDateString()}</span>
+                      <p className="font-semibold text-lg leading-snug mt-1 mb-1">{author.title}</p>
+                      <p className="text-gray-700 text-base leading-6 mt-1">
+                        {author.description}
+                      </p>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            ))
+          )
+        }
+      </div>
     </div>
   )
 }
 
-export default page
+export default Author

@@ -70,6 +70,7 @@ const Hero = ({ apiResponse }) => {
   const handleClick = (index) => {
     setSelectedIndex(index);
   };
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -87,6 +88,7 @@ const Hero = ({ apiResponse }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [selectedIndex]);
+
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -121,6 +123,7 @@ const Hero = ({ apiResponse }) => {
   const deleteFiles = () => {
     setPdfPreviews([]);
   };
+
   const deleteSingle = (index) => {
     setPdfPreviews((prevPreviews) =>
       prevPreviews.filter((_, i) => i !== index)
@@ -134,6 +137,7 @@ const Hero = ({ apiResponse }) => {
       handleFiles(inputFiles);
     }
   };
+  
   const handleFiles = (newFiles) => {
     const pdfFiles = newFiles.filter((file) => file.type === "application/pdf");
     if (pdfFiles.length > 0) {

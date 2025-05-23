@@ -1,55 +1,27 @@
 "use client";
-import axios from 'axios';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import { fetchPageContent } from '../utils/fetchPageContent';
 
-function page() {
-  const [rawHtml, setRawHtml] = useState('');
+function AboutUs() {
   const path = usePathname();
-  const router = useRouter();
-  
-  //axios request to api
+  const [rawHtml, setRawHtml] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    const fetchHomePage = async () => {
-      try {   
-        const slug = path === "/" ? "home" : path.replace("/", "");
-        const response = await axios.get(`http://localhost:5089/api/page/${slug}`,{
-          headers: {
-            "Accept": "application/json",
-          }
-        });
-        const content = response.data?.data?.contentDict?.key_0 ?? '';
-        const fixedHtml = content.replace(/\bclassname=/g, 'class=').replace(/{"\s*"}/g, ' ');
-        setRawHtml(fixedHtml);
-        console.log("Response Data for pages: ", response.data);
-      } catch (error) {
-        console.error("Error while fetching page: ", error);
-      }
-    }
-    fetchHomePage();
+    const loadContent = async () => {
+      const slug = path === '/' ? 'home' : path.replace('/', '');
+      const { rawHtml, error } = await fetchPageContent(slug);
+      setRawHtml(rawHtml);
+      setError(error);
+      setLoading(false);
+    };
+    loadContent();
   }, [path]);
 
-  // useEffect(() => {
-  //   if (typeof window === 'undefined') return;
-  //   const handleClick = (e) => {
-  //     // Find the closest anchor in case the click is on a child element
-  //     const anchor = e.target.closest('a');
-  //     if (!anchor) return;
-
-  //     const href = anchor.getAttribute('href');
-
-  //     // Only handle internal links
-  //     if (href && href.startsWith('/') && !href.startsWith('//')) {
-  //       e.preventDefault();
-  //       router.push(href);
-  //     }
-  //   };
-
-  //   const container = document.getElementById('article-content');
-  //   container?.addEventListener('click', handleClick);
-
-  //   return () => container?.removeEventListener('click', handleClick);
-  // }, [router]);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error loading page content</p>;
 
   return (
     <div>
@@ -65,4 +37,4 @@ function page() {
   )
 }
 
-export default page
+export default AboutUs

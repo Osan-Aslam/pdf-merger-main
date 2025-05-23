@@ -1,39 +1,35 @@
 "use client";
-import axios from 'axios';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import { fetchPageContent } from '../utils/fetchPageContent';
 
-function page() {
-  const [apiResponse, setApiResponse] = useState(null);
-    const path = usePathname();
+function Privacy() {
+  const path = usePathname();
+  const [rawHtml, setRawHtml] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      const slug = path === '/' ? 'home' : path.replace('/', '');
+      const { rawHtml, error } = await fetchPageContent(slug);
+      setRawHtml(rawHtml);
+      setError(error);
+      setLoading(false);
+    };
+    loadContent();
+  }, [path]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error loading page content</p>;
   
-    let rawHtml = apiResponse?.data?.contentDict?.key_1?.replace(/\bclassname=/g, "className=").replace(/{"\s*"}/g, ' ');
-  
-    //axios request to api
-    useEffect(() => {
-      const fetchHomePage = async () => {
-        try {
-          const slug = path === "/" ? "home" : path.replace("/", "");
-          const response = await axios.get(`http://localhost:5089/api/page/${slug}`, {
-            headers: {
-              "Accept": "application/json",
-            }
-          });
-          setApiResponse(response.data);
-          console.log("Response Data for pages: ", response.data);
-        } catch (error) {
-          console.error("Error while fetching page: ", error);
-        }
-      }
-      fetchHomePage();
-    }, []);
   return (
     <div>
       <div className='mb-[40px] mt-[10px]'>
         <h1 className='lg:text-[35px] text-[15px] font-extrabold text-center'>Privacy</h1>
       </div>
       {rawHtml ? (
-        <div dangerouslySetInnerHTML={{ __html: rawHtml }} />
+        <div id='article-content' dangerouslySetInnerHTML={{ __html: rawHtml }} />
       ) : (
         <p></p>
       )}
@@ -41,4 +37,4 @@ function page() {
   )
 }
 
-export default page
+export default Privacy
