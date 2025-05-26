@@ -19,38 +19,37 @@ export default async function slug() {
   }
 
   const blogs = response?.data?.blogs || [];
-  const author = response?.data?.author || blogs[0]?.author;
+  const author = response?.data?.author ?? (blogs.length > 0 ? blogs[0]?.author : null);
 
   console.log("Authors :", author);
   console.log("Blog :", blogs);
 
-  if (!author) return <div>Author not found</div>;
   return (
     <div>
-      <div class="w-[70%] m-auto my-3 px-[10px]">
+      <div className="w-[70%] m-auto my-3 px-[10px]">
         {author ? (
-          <div class="bg-[#ededf4] rounded-xl p-6">
-            <div class="flex items-center mb-6">
-              <Image src={placeholderImage} alt="placeholder-image" loading="lazy" class="w-16 h-16 object-cover" />
-              <div class="pl-4">
-                <small class="text-sm text-gray-600">Our Team</small>
-                <h2 class="text-xl font-semibold">{author.title}</h2>
-                <p class="text-sm text-gray-500">{author.description}</p>
+          <div className="bg-[#ededf4] rounded-xl p-6">
+            <div className="flex items-center mb-6">
+              <Image src={placeholderImage} alt="placeholder-image" priority className="w-16 h-16 object-cover" />
+              <div className="pl-4">
+                <small className="text-sm text-gray-600">Our Team</small>
+                <h2 className="text-xl font-semibold">{author?.title}</h2>
+                <p className="text-sm text-gray-500">{author?.description}</p>
               </div>
             </div>
-            <p class="mb-6 text-gray-700">
+            <p className="mb-6 text-gray-700">
               Amanda Montell is a writer who knows a lot about how we use words. She studied how people talk and write in groups and how this affects our culture. She likes to write about why we talk the way we do and how it shapes our relationships. She explains complicated language ideas in a way that's easy to understand. Amanda's writing is fun and interesting, and she uses humor to help explain tricky concepts.
             </p>
-            <div class="flex flex-col lg:flex-row gap-6">
-              <div class="lg:w-5/12">
-                <h3 class="text-lg font-semibold mb-2">Expertise</h3>
-                <p class="text-gray-700">
+            <div className="flex flex-col lg:flex-row gap-6">
+              <div className="lg:w-5/12">
+                <h3 className="text-lg font-semibold mb-2">Expertise</h3>
+                <p className="text-gray-700">
                   Language and how people use it Communication Understanding how words affect our society
                 </p>
               </div>
-              <div class="lg:w-7/12 lg:pl-6">
-                <h3 class="text-lg font-semibold mb-2">Education</h3>
-                <ul class="list-disc pl-5 text-gray-700">
+              <div className="lg:w-7/12 lg:pl-6">
+                <h3 className="text-lg font-semibold mb-2">Education</h3>
+                <ul className="list-disc pl-5 text-gray-700">
                   <li>
                     Bachelor's degree in the study of language, from University of California, Los Angeles. Master's degree in studying how language works in groups, from Stanford University
                   </li>

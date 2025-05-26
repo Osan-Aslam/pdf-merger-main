@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 const Footer = ({ apiResponse }) => {
-  let rawHtml = apiResponse?.data.menuDict.googlelink?.replace(/classname=/g, "class=");
-  const { title, description , menuDict = {}} = apiResponse?.data ?? {}; //destructuring
-  const {about, aboutus_url, AboutUs, contactus_url, ContactUs, PrivacyPolicy_url, PrivacyPolicy, TermsandConditions_url, TermsandConditions, OurEditorialProcess_url, OurEditorialProcess, authors_url, Authors, resources, insights_url, insights, connectwithus} = menuDict;
+
+  const [rawHtml, setRawHtml] = useState('');
+  useEffect(() => {
+    if (apiResponse?.data?.menuDict?.googlelink) {
+      const sanitized = apiResponse.data.menuDict.googlelink.replace(/classname=/g, 'class=');
+      setRawHtml(sanitized);
+    } else {
+      setRawHtml('');
+    }
+  }, [apiResponse]);
+
+  const { title, description, menuDict = {} } = apiResponse?.data ?? {}; //destructuring
+  const { about, aboutus_url, AboutUs, contactus_url, ContactUs, PrivacyPolicy_url, PrivacyPolicy, TermsandConditions_url, TermsandConditions, OurEditorialProcess_url, OurEditorialProcess, authors_url, Authors, resources, insights_url, insights, connectwithus } = menuDict;
 
   return (
     <div className="bg-[#333333] pt-[70px] pb-[30px] mt-[80px]">

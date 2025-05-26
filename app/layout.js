@@ -10,20 +10,23 @@ const nunito = Nunito_Sans({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   const [apiResponse, setApiResponse] = useState(null);
-
+  const [loading, setLoading] = useState(true);
   //axios request to api
   useEffect(() => {
     const fetchHomePage = async () => {
-      try {   
-        const response = await axios.get('http://localhost:5089/api/page',{
+      try {
+        const response = await axios.get('http://localhost:5089/api/page', {
           headers: {
             "Accept": "application/json",
           }
         });
+        setLoading(true);
         setApiResponse(response.data);
-        console.log("Response Data: ", response.data);
+        // console.log("Response Data: ", response.data);
       } catch (error) {
         console.error("Error while fetching page: ", error);
+      } finally {
+        setLoading(false);
       }
     }
     fetchHomePage();
@@ -31,9 +34,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={nunito.className}>
-        <Navbar apiResponse={apiResponse}/>
-        {children}
-        <Footer apiResponse={apiResponse}/>
+        {loading ? (
+          <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex justify-center items-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid"></div>
+          </div>
+        ) : (
+          <>
+            <Navbar apiResponse={apiResponse} />
+            {children}
+            <Footer apiResponse={apiResponse} />
+          </>
+        )}
       </body>
     </html>
   );

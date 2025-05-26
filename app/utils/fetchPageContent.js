@@ -7,7 +7,6 @@ export async function fetchPageContent(slug) {
 				Accept: 'application/json',
 			},
 		});
-
 		const contentDict = response.data?.data?.contentDict ?? {};
 		const firstKey = Object.keys(contentDict)[0];
 		const content = contentDict[firstKey] ?? '';

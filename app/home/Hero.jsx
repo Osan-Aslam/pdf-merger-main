@@ -272,7 +272,7 @@ const Hero = ({ apiResponse }) => {
               </button>
             </div>
           </div>
-          <div className="h-[265px] p-[10px] flex  gap-[12px] justify-center items-center overflow-x-auto shrink-0 border-[2px] rounded-[10px] border-[#DEDEDE] border-dashed">
+          <div className="h-[265px] p-[10px] flex  gap-[12px] lg:justify-start justify-center items-center overflow-x-auto shrink-0 border-[2px] rounded-[10px] border-[#DEDEDE] border-dashed">
             <div className={`lg:w-[746px] relative lg:p-[0px] p-[10px] lg:h-[235px] flex flex-col gap-[12px] justify-center items-center
               ${dragging ? "bg-[#fff8f8]" : "bg-white"} ${pdfPreviews.length > 0 ? "hidden" : ""}`} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave} onDragOver={handleDragOver} onDrop={handleDrop}>
               <Image src="/doc2.svg" alt="Logo" height={84} width={96.98} className="cursor-pointer lg:w-[84px] w-[60px]" />

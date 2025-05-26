@@ -9,7 +9,7 @@ export const Navbar = ({apiResponse}) => {
         <div>
           <div className="flex md:flex-row flex-col md:gap-[0px] gap-[20px] items-center justify-between">
             <Link href="/">
-              <Image src="/logo.svg" alt="Logo" height={40} width={40} className="cursor-pointer"/>
+              <Image src="/logo.svg" alt="Logo" height={40} width={40} priority className="cursor-pointer"/>
             </Link>
             <nav className="flex gap-[19px] text-black/60 items-center">
               <Link href={apiResponse?.data.menuDict?.insights_url || "#"} className="text-[#333333] w-[83px] text-[14px] md:block hidden font-semibold hover:text-red">{apiResponse?.data.menuDict?.insights || "insights"}</Link>
