@@ -3,7 +3,6 @@ import Hero from "./home/Hero";
 import Curved from "./home/Curved";
 import HowWorks from "./home/HowWorks";
 import Intro from "./home/Intro";
-import Footer from "./home/Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 

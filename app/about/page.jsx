@@ -8,7 +8,6 @@ function AboutUs() {
   const [rawHtml, setRawHtml] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   useEffect(() => {
     const loadContent = async () => {
       const slug = path === '/' ? 'home' : path.replace('/', '');
@@ -19,12 +18,10 @@ function AboutUs() {
     };
     loadContent();
   }, [path]);
-
-  if (loading) return <div className="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-30 z-50 flex justify-center items-center">
+  if (loading) return <div className="w-full h-screen bg-black flex justify-center items-center">
     <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid"></div>
   </div>
   if (error) return <p>Error loading page content</p>;
-
   return (
     <div>
       <div className='mb-[40px] mt-[10px]'>

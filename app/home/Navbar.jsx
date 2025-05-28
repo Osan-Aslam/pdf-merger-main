@@ -13,7 +13,7 @@ export const Navbar = ({apiResponse}) => {
             </Link>
             <nav className="flex gap-[19px] text-black/60 items-center">
               <Link href={apiResponse?.data.menuDict?.insights_url || "#"} className="text-[#333333] w-[83px] text-[14px] md:block hidden font-semibold hover:text-red">{apiResponse?.data.menuDict?.insights || "insights"}</Link>
-              <Link href={apiResponse?.data.menuDict.aboutus_url || "#"} className="text-[#333333] w-[83px] text-[14px] font-semibold hover:text-red md:block hidden"> About Us</Link>
+              <Link href={apiResponse?.data.menuDict.aboutus_url || "#"} className="text-[#333333] w-[83px] text-[14px] font-semibold hover:text-red md:block hidden">{apiResponse?.data.menuDict?.AboutUs || "About Us"}</Link>
               <button className="bg-[#FE3323] text-white px-[26px] py-[10px] rounded-[6px] font-semibold text-[16px] w-[93px] h-[42px] inline-flex align-items justify-center hover:shadow-[0px_0px_14px_rgba(254,51,35,0.8)]">
                 Login
               </button>

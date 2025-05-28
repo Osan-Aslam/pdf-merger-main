@@ -19,15 +19,14 @@ function ContactUs() {
     };
     loadContent();
   }, [path]);
-
-  if (loading) return <div className="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-30 z-50 flex justify-center items-center">
+  if (loading) return <div className="w-full h-screen bg-black flex justify-center items-center">
     <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid"></div>
   </div>
   if (error) return <p>Error loading page content</p>;
 
   return (
     <div className="page-type-7 px-4 py-8 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Contact Us</h1>
       <div
         className="content"
         dangerouslySetInnerHTML={{ __html: rawHtml || 'No content available' }}

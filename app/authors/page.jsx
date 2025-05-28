@@ -32,7 +32,7 @@ function Author() {
     loadContent();
   }, [path]);
 
-  if (loading) return <div className="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-30 z-50 flex justify-center items-center">
+  if (loading) return <div className="w-full h-screen bg-black flex justify-center items-center">
     <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid"></div>
   </div>
   if (error) return <p>Error loading page content</p>;
@@ -49,7 +49,7 @@ function Author() {
             authors.map((author, index) => (
               <div key={index} className="w-full lg:w-[30%] md:w-1/3 mb-4 me-4">
                 <div className="bg-[#ededf4] rounded-md shadow p-4 hover:shadow-md transition duration-300">
-                  <Link href={author.canonical} className="flex items-center space-x-4">
+                  <Link href={`author${author.canonical}`} className="flex items-center space-x-4">
                     <div className="w-1/3">
                       <div className="w-full h-24 rounded-full overflow-hidden bg-gray-100">
                         <Image src={author?.asset?.url || placeholderImage} alt="Evelyn Lucas" width={40} height={40} priority className="w-full h-full object-contain" />

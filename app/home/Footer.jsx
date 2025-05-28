@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Footer = ({ apiResponse }) => {
-
   const [rawHtml, setRawHtml] = useState('');
   useEffect(() => {
     if (apiResponse?.data?.menuDict?.googlelink) {

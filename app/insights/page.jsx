@@ -4,6 +4,7 @@ import placeholderImage from '../../public/placeholder-image.svg';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { fetchPageContent } from '../utils/fetchPageContent';
+import Link from 'next/link';
 
 function Insights() {
   const path = usePathname();
@@ -17,11 +18,9 @@ function Insights() {
       try {
         const response = await fetchPageContent(slug);
         const blogList = response?.data?.blogs || [];
-        console.log(response);
         setBlogs(blogList);
         setError(null);
       } catch (err) {
-        console.error(err);
         setError('Error loading blog posts');
       } finally {
         setLoading(false);
@@ -30,8 +29,7 @@ function Insights() {
 
     loadContent();
   }, [path]);
-
-  if (loading) return <div className="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-30 z-50 flex justify-center items-center">
+  if (loading) return <div className="w-full h-screen bg-black flex justify-center items-center">
     <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid"></div>
   </div>
   if (error) return <p>Error loading page content</p>;
@@ -47,24 +45,24 @@ function Insights() {
             <p>No Blogs Found</p>
           ) : (
             blogs.map((blog, index) => (
-              <div key={index} class="w-full lg:w-1/3 my-3 px-[10px]">
+              <div key={index} className="w-full lg:w-1/3 my-3 px-[10px]">
                 <div className="bg-[#ededf4] shadow-md rounded-md overflow-hidden">
                   <div className="p-4">
                     <div className="flex items-center justify-between pb-2">
-                      <a href="#" className="flex items-center">
+                      <Link href="#" className="flex items-center">
                         <Image src={blog.asset?.url || placeholderImage} width={40} height={40} alt="nancy-oliver" loading="lazy" className="w-10 h-10 object-cover rounded-full" />
                         <p className="mb-0 pl-3 text-sm font-medium">{blog.author.title}</p>
-                      </a>
+                      </Link>
                       <span className="text-xs text-gray-500">{new Date(blog.createdDate).toLocaleDateString()}</span>
                     </div>
                     <h2 className="text-lg font-semibold pt-2">
-                      <a href={blog.canonical} className="hover:text-blue-600 transition line-clamp-1">
+                      <Link href={`blog${blog.canonical}`} className="hover:text-blue-600 transition line-clamp-1">
                         {blog.title}
-                      </a>
+                      </Link>
                     </h2>
-                    <a href="#" className="mt-2 text-sm text-gray-600 hover:text-gray-800 transition line-clamp-3">
+                    <Link href={`blog${blog.canonical}`} className="mt-2 text-sm text-gray-600 hover:text-gray-800 transition line-clamp-3">
                       {blog.description}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
