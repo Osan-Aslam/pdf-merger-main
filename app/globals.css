@@ -1,34 +1,342 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
 
-.bord{
-    border-radius:50% 50% 0 0/100% 100% 0 0;
+p {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+h1 {
+	font-size: 34px !important;
+	font-weight: 800 !important;
+}
+
+h2 {
+	font-size: 26px !important;
+	font-weight: 800 !important;
+}
+
+h3 {
+	font-size: 20px !important;
+	font-weight: 700 !important
+}
+
+h5 {
+	font-size: 16px !important;
+	font-weight: 700 !important;
+}
+
+a {
+	text-decoration: none !important;
+	color: black !important;
+}
+
+.row {
+	margin: auto;
+}
+
+.bord {
+	border-radius: 50% 50% 0 0/100% 100% 0 0;
 }
 
 ul {
-    list-style-type: disc
+	list-style-type: disc
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-    height:8px
+	width: 8px;
+	height: 8px
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 6px;
-    background: rgba(255,0,0,0.8); 
-    
+	-webkit-border-radius: 10px;
+	border-radius: 6px;
+	background: rgba(255, 0, 0, 0.8);
+
 }
+
 ::-webkit-scrollbar-thumb:window-inactive {
-    background: #FE3323; 
+	background: #FE3323;
+}
+
+.navbar-nav .nav-item {
+	margin: 0px 20px;
+	line-height: 20px;
+	font-size: 15px;
+	font-weight: 500;
+}
+
+.navbar-nav .login-btn {
+	background-color: #FE3323;
+	color: white;
+	padding: 0px 19px;
+}
+
+.navbar-nav .login-btn:hover {
+	background-color: #cd2a1f;
+	color: white;
+	padding: 0px 19px;
+}
+
+.bg-custom-gradient {
+	background-image: linear-gradient(180deg, #FEEAE9 0%, rgba(254, 234, 233, 0) 100%);
+	border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+	height: 112px;
+	width: 100%;
+	position: absolute;
+	top: 412px;
+	z-index: -2;
+	left: 0px;
+}
+
+.merge-tool {
+	background-color: #fff;
+	box-shadow: 0px 0px 30px 0px #0000001A;
+	border-radius: 8px;
+}
+
+.merge-tool .border-btn {
+	border: 1.2px solid #FE3323;
+	color: #FE3323;
+	font-size: 15px;
+}
+
+.merge-tool .border-btn:hover {
+	border: 1.2px solid #FE3323;
+	color: #FE3323;
+	background-color: #e5e4e4;
+}
+
+.merge-tool .count {
+	font-size: 14px;
+	font-weight: 500;
+	color: #b1a2a2;
+}
+
+/* authors */
+.authors .card,
+.blogs .card {
+	background-color: #ededf4;
+	border: none;
+}
+
+/* Blogs */
+.blogs .blog-title,
+.blogs .blog-discription {
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	line-height: 25px;
+}
+
+.blogs .blog-discription {
+	-webkit-line-clamp: 3 !important;
+}
+
+.footers {
+	background-color: #333333;
+}
+
+.footers ul {
+	padding: 0;
+	list-style: none;
+}
+
+.footers ul li a {
+	color: #fff !important;
+	line-height: 35px;
+}
+
+.article-content a {
+	text-decoration: underline !important;
+	color: #FE3323 !important;
+}
+
+.how-working h3 {
+	line-height: 32px;
+}
+
+.footers h5,
+.footers p {
+	color: #fff;
+}
+
+.footers .bord {
+	border-bottom: 1px solid #fff;
+}
+
+.pdf-preview {
+	border: 1.5px dashed #DEDEDE;
+	border-radius: 8px;
+	overflow: auto;
+}
+
+.pdf-preview .upload-btn,
+.btn.save-btn {
+	background-color: #FE3323;
+	color: #fff;
+	padding: 17px 61px;
+	display: flex;
+	font-size: 20px;
+	font-weight: 700;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.pdf-preview .upload-btn:hover,
+.btn.save-btn:hover {
+	background-color: #e81809;
+	color: #fff;
+}
+
+.pdf-display {
+	border: 1px solid #DEDEDE;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	min-width: 170px;
+	margin: 0px 10px;
+	cursor: pointer;
+}
+
+.pdf-display:hover .pdf-icons {
+	visibility: visible;
+}
+
+.pdf-display .pdf-image {
+	width: 117px;
+	height: 157px;
+	margin-top: 10px;
+}
+
+.count-pdf {
+	background-color: red;
+	color: white;
+	padding: 0px 12px;
+	border-radius: 15px;
+	margin: 7px 0px;
+	height: 19px;
+	font-size: 13px;
+}
+
+.pdf-preview .pdf-icons {
+	position: relative;
+	top: 5px;
+	display: flex;
+	visibility: hidden;
+}
+
+.pdf-icons img {
+	margin: 0px 4px;
+}
+
+.popup-visible {
+	position: fixed;
+	z-index: 50;
+	inset: 0;
+	background-color: black;
+	opacity: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.popup-navbar {
+	background-color: #424242;
+	width: 100%;
+	height: 60px;
+}
+
+.pdf-image-popup {
+	height: calc(100vh - 60px);
+	opacity: 0.9;
+	background-color: #000;
+}
+
+.pdf-popupImage {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+}
+
+.offcanvas-body .nav-item {
+	line-height: 30px;
+}
+
+.offcanvas-body .login-btn {
+	width: 100px;
+}
+
+.input-file {
+	opacity: 0;
+	height: 58%;
+	position: absolute;
+	width: 57%;
+	cursor: pointer;
+}
+
+.second-input {
+	opacity: 0;
+	width: 0px;
+}
+
+.progress-bar-striped {
+	background-image: linear-gradient(315deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+}
+
+.progress-bar {
+	background-color: #FE3323 !important;
+}
+
+.load {
+	top: 101px;
+	left: 0px;
+	height: 0px;
+}
+
+.custom-loader-height {
+	height: 259px;
+	/* or whatever height you want */
+}
+
+.loading-overlay {
+	height: 100vh;
+	width: 100%;
+}
+
+.authorImage {
+	width: 50px;
+	height: 50px;
+}
+
+.how-working h3 {
+	font-weight: 500 !important;
+}
+
+.light-box {
+	background-color: #f0f0f0;
+	height: 220px;
+	border-radius: 8px;
+}
+
+.article-content li {
+	line-height: 32px;
+}
+
+.progress-bar-striped {
+	background-image: linear-gradient(315deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent) !important;
 }
