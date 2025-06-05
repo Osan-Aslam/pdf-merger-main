@@ -40,7 +40,6 @@ const SlugPage = () => {
 
         if (data.data?.pageType === 1 && data.data?.tool?.name) {
           const toolName = data.data.tool.name;
-          console.log("toolName :", toolName);
           try {
             const ToolComponent = dynamic(() =>
               import(`../components/tools/${toolName}/page`)

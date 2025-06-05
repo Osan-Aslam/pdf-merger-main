@@ -15,7 +15,6 @@ export const ApiProvider = ({ children }) => {
 					headers: { "Accept": "application/json" },
 				});
 				setApiResponse(response.data);
-				console.log("Response data: ", response.data);
 			} catch (error) {
 				console.error("API fetch error:", error);
 			} finally {

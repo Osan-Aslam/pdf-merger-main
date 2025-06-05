@@ -5,8 +5,6 @@ import React from 'react'
 function Footer({apiResponse}) {
   const { title, description, menuDict = {} } = apiResponse?.data ?? {};
   const { about, aboutus_url, AboutUs, contactus_url, ContactUs, PrivacyPolicy_url, PrivacyPolicy, TermsandConditions_url, TermsandConditions, OurEditorialProcess_url, OurEditorialProcess, authors_url, Authors, resources, insights_url, insights, connectwithus } = menuDict;
-  let rawContent = menuDict.googlelink ?? '';
-  const cleanedContent = rawContent.replace(/{"\s*"}/g, ' ');
   return (
     <>
       <div className="container-fluid footers">
