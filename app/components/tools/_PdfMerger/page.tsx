@@ -1,9 +1,9 @@
+"use client";
 import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 import { PDFDocument, degrees } from "pdf-lib";
 import addImage from '../../../../public/add.svg'
-import docwImage from '../../../../public/docw.svg'
 import rotateImage from '../../../../public/rotate.svg'
 import rotatewImage from '../../../../public/rotatew.svg'
 import rotatesecImage from '../../../../public/rotatesec.svg'
@@ -16,6 +16,7 @@ import prevImage from '../../../../public/prev.svg'
 import redrotateImage from '../../../../public/redrotate.svg'
 import reddeleteImage from '../../../../public/reddelete.svg'
 import redrotatesecImage from '../../../../public/redrotatesec.svg'
+import { Alert } from 'react-bootstrap';
 interface PdfPreview {
 	imageUrl: string;
 	name: string;
@@ -33,6 +34,7 @@ export default function MergePdfTool({ apiResponse }) {
 	const [isPopupVisible, setIsPopupVisible] = useState(false);
 	const [selectedPopupIndex, setSelectedPopupIndex] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [alertVisible, setAlertVisible] = useState(false);
 
 	const openPopup = (index) => {
 		setSelectedPopupIndex(index);
@@ -55,6 +57,7 @@ export default function MergePdfTool({ apiResponse }) {
 			});
 		});
 	};
+
 	const rotateSinglePdfAnti = (index) => {
 		setPdfPreviews((prevPreviews) => {
 			return prevPreviews.map((preview, i) => {
@@ -144,20 +147,43 @@ export default function MergePdfTool({ apiResponse }) {
 	};
 
 	const deleteSingle = (index) => {
-		setPdfPreviews((prevPreviews) =>
-			prevPreviews.filter((_, i) => i !== index)
-		);
+		setPdfPreviews((prevPreviews) => {
+
+			const updatePreviews = prevPreviews.filter((_, i) => i !== index)
+			if (updatePreviews.length === 0 && fileInputRef.current) {
+				fileInputRef.current.value = "";
+			}
+			return updatePreviews;
+		});
 		closePopup();
 	};
 
-	const handleInputChange = (event) => {
-		const inputFiles = Array.from(event.target.files);
-		if (inputFiles) {
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		const inputFiles = Array.from(event.target.files || []);
+		const maxSize = 20 * 1024 * 1024; // 20MB
+		const hasLargeFile = inputFiles.some(file => file.size > maxSize);
+		if (hasLargeFile) {
+			setAlertVisible(true);
+			event.target.value = ''; // reset input
+			return;
+		}
+		if (inputFiles.length > 0) {
+			setAlertVisible(false);
 			setLoading(true);
 			handleFiles(inputFiles);
 		}
 	};
 
+	useEffect(() => {
+		if (alertVisible) {
+			const timeout = setTimeout(() => {
+				setAlertVisible(false);
+			}, 3000);
+
+			return () => clearTimeout(timeout); // Clean up
+		}
+	}, [alertVisible]);
+	
 	const handleFiles = (newFiles) => {
 		const pdfFiles = newFiles.filter((file) => file.type === "application/pdf");
 		if (pdfFiles.length > 0) {
@@ -262,6 +288,13 @@ export default function MergePdfTool({ apiResponse }) {
 
 	return (
 		<>
+			<div className='col-lg-5 mx-auto'>
+				{alertVisible && (
+					<Alert variant="danger" onClose={() => setAlertVisible(false)} dismissible>
+						Your file exceed the 30MB limit.
+					</Alert>
+				)}
+			</div>
 			<div className="row">
 				<div className="col-lg-8 mx-auto merge-tool p-3">
 					<div className={`d-flex justify-content-between pb-2 ${pdfPreviews.length === 0 ? 'd-none' : ''}`}>

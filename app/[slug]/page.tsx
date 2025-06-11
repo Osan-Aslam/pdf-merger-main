@@ -1,5 +1,3 @@
-'use client';
-import React, { useEffect, useState, Suspense } from 'react';
 import AllBlog from '../components/AllBlog/page';
 import Blog from '../components/Blog/page';
 import AllAuthor from '../components/AllAuthor/page';
@@ -7,11 +5,9 @@ import Author from '../components/Author/page';
 import Info from '../components/Info/page';
 import ContactUs from '../components/ContactUs/page';
 import Pricing from '../components/Pricing/page';
-import { useParams } from 'next/navigation';
-import axios from 'axios';
-import dynamic from 'next/dynamic';
+import ToolRenderer from '../components/ToolRender/page';
 
-const pageComponentMap = {
+const pageComponentMap: { [key: number]: any } = {
   3: AllBlog,
   4: Blog,
   5: AllAuthor,
@@ -21,70 +17,49 @@ const pageComponentMap = {
   9: Pricing,
 };
 
-const SlugPage = () => {
-  const { slug } = useParams();
-  const validSlug = Array.isArray(slug) ? slug[0] : slug;
-  const [pageData, setPageData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [DynamicTool, setDynamicTool] = useState(null);
+export default async function SlugPage({ params }: { params: { slug: string } }) {
+  const validSlug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5089/api/page/${validSlug}`, {
-          headers: { "Accept": "application/json" }
-        });
-        const data = response.data;
-        setPageData(data);
+  let pageData;
 
-        if (data.data?.pageType === 1 && data.data?.tool?.name) {
-          const toolName = data.data.tool.name;
-          try {
-            const ToolComponent = dynamic(() =>
-              import(`../components/tools/${toolName}/page`)
-            );
-            setDynamicTool(() => ToolComponent);
-          } catch (e) {
-            console.error(`Failed to dynamically import tool: ${toolName}`, e);
-          }
-        }
+  try {
+    const res = await fetch(`http://localhost:5089/api/page/${validSlug}`, {
+      cache: 'no-store',
+      headers: { Accept: 'application/json' },
+    });
 
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const contentType = res.headers.get('content-type') || '';
 
-    if (validSlug) fetchData();
-  }, [validSlug]);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch page data: ${res.status} ${res.statusText}`);
+    }
 
-  if (loading) return <div className='loading-overlay d-flex justify-content-center align-items-center'>
-    <div className="spinner-border text-primary" role="status">
-      <span className="visually-hidden">Loading...</span>
-    </div>
-  </div>;
-  if (error) return <div>Error: {error.message}</div>;
-  if (!pageData) return <div>No page data</div>;
+    if (!contentType.includes('application/json')) {
+      const raw = await res.text();
+      throw new Error(`Expected JSON, got: ${contentType}. Response:\n${raw}`);
+    }
 
-  const pageType = pageData.data?.pageType;
+    pageData = await res.json();
+  } catch (error: any) {
+    return <div>Error: {error.message}</div>;
+  }
 
-  // Render tool dynamically
-  if (pageType === 1 && DynamicTool) {
-    const ToolComponent = DynamicTool;
+  if (!pageData || !pageData.data) {
+    return <div>No page data found for: {validSlug}</div>;
+  }
+
+  const pageType = pageData.data.pageType;
+
+  if (pageType === 1 && pageData.data.tool?.name) {
     return (
-      <Suspense fallback={<div>Loading tool...</div>}>
-        <ToolComponent viewModel={pageData} />
-      </Suspense>
+      <ToolRenderer toolName={pageData.data.tool.name} viewModel={pageData} />
     );
   }
 
-  // Render regular static pages
   const PageComponent = pageComponentMap[pageType];
-  if (!PageComponent) return <div>404 - Page Not Found</div>;
+  if (!PageComponent) {
+    return <div>404 - Page Not Found</div>;
+  }
 
   return <PageComponent viewModel={pageData} />;
-};
-
-export default SlugPage;
+}

@@ -4,10 +4,10 @@ import React from 'react'
 
 function Footer({apiResponse}) {
   const { title, description, menuDict = {} } = apiResponse?.data ?? {};
-  const { about, aboutus_url, AboutUs, contactus_url, ContactUs, PrivacyPolicy_url, PrivacyPolicy, TermsandConditions_url, TermsandConditions, OurEditorialProcess_url, OurEditorialProcess, authors_url, Authors, resources, insights_url, insights, connectwithus } = menuDict;
+  const { about, aboutus_url, AboutUs, contactus_url, ContactUs, PrivacyPolicy_url, PrivacyPolicy, TermsandConditions_url, TermsandConditions, OurEditorialProcess_url, OurEditorialProcess, authors_url, Authors, resources, insights_url, insights, connectwithus, Copyright } = menuDict;
   return (
     <>
-      <div className="container-fluid footers">
+      <footer className="container-fluid footers">
         <div className="container py-5 p-2 pb-lg-0">
           {apiResponse?.data && (
             <div className="row justify-content-between bord pb-lg-0 pb-4">
@@ -51,20 +51,20 @@ function Footer({apiResponse}) {
                 <h5>{menuDict.connectwithus}</h5>
                 <div className='d-flex justify-content-between pe-3'>
                   <Link href="#">
-                    <Image src={'/appstore.svg'} alt='appstore' width={120} height={50}></Image>
+                    <Image src={'/appstore.svg'} alt='appstore' width={110} height={50}></Image>
                   </Link>
                   <Link href="#">
-                    <Image src={'/google-play.svg'} alt='googlePlay' width={120} height={50}></Image>
+                    <Image src={'/google-play.svg'} alt='googlePlay' width={110} height={50}></Image>
                   </Link>
                 </div>
               </div>
             </div>
           )}
           <p className="text-center pt-5 pb-4 mb-0">
-            Copyright © 2024
+            {menuDict.Copyright}
           </p>
         </div>
-      </div>
+      </footer>
     </>
   )
 }

@@ -1,6 +1,4 @@
 import MergePdfTool from '../tools/_PdfMerger/page';
-import startImg from "../../../public/star.svg";
-import Link from 'next/link';
 
 export const HomeComponent = ({ apiResponse }) => {
   const cleanHtmlContent = (raw: unknown): string => {
