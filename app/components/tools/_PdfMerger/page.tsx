@@ -183,7 +183,7 @@ export default function MergePdfTool({ apiResponse }) {
 			return () => clearTimeout(timeout); // Clean up
 		}
 	}, [alertVisible]);
-	
+
 	const handleFiles = (newFiles) => {
 		const pdfFiles = newFiles.filter((file) => file.type === "application/pdf");
 		if (pdfFiles.length > 0) {

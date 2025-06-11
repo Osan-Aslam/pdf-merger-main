@@ -310,7 +310,6 @@ ul {
 
 .custom-loader-height {
 	height: 259px;
-	/* or whatever height you want */
 }
 
 .loading-overlay {
@@ -339,4 +338,8 @@ ul {
 
 .progress-bar-striped {
 	background-image: linear-gradient(315deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent) !important;
+}
+
+.navbar-toggler:focus{
+	box-shadow: none;
 }
