@@ -1,4 +1,3 @@
-// app/ClientWrapper.js
 import { ApiProvider } from "./context/ApiContext";
 import ClientContent from "./Clientcontent";
 

@@ -18,7 +18,7 @@ export const HomeComponent = ({ apiResponse }) => {
     <div className="container">
       <div className="row">
         <div className="col-lg-8 mx-auto text-center mb-3">
-          <h1>{apiResponse?.data.title}</h1>
+          <h1>{apiResponse?.data?.title}</h1>
           <p>{apiResponse?.data?.description}</p>
         </div>
       </div>
