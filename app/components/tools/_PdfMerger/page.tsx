@@ -148,7 +148,6 @@ export default function MergePdfTool({ apiResponse }) {
 
 	const deleteSingle = (index) => {
 		setPdfPreviews((prevPreviews) => {
-
 			const updatePreviews = prevPreviews.filter((_, i) => i !== index)
 			if (updatePreviews.length === 0 && fileInputRef.current) {
 				fileInputRef.current.value = "";
@@ -321,7 +320,7 @@ export default function MergePdfTool({ apiResponse }) {
 							</button>
 						</div>
 					</div>
-					<div className={`text-center col-lg-5 col-8 mx-auto position-relative load ${loading ? '' : 'd-none'}`}>
+					<div className={`text-center col-lg-5 col-8 mx-auto position-relative load z-3 ${loading ? '' : 'd-none'}`}>
 						<span>Your PDF is processing. Please Wait!</span>
 						<div className="progress" role="progressbar" aria-label="Animated striped example">
 							<div className="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
