@@ -47,7 +47,7 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <head>
         <title>{pageTitle}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
         {otherMetaTags}
       </head>
       <body className={nunito.className}>
