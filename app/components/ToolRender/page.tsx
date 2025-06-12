@@ -6,7 +6,7 @@ export default function ToolRenderer({ toolName, viewModel }: { toolName: string
 	let ToolComponent;
 	try {
 		ToolComponent = dynamic(() => import(`../tools/${toolName}/page`), {
-			ssr: false, // optional: ensure only client-side render
+			ssr: false,
 		});
 	} catch (e) {
 		return <div>Failed to load tool: {toolName}</div>;

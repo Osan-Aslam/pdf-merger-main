@@ -15,7 +15,6 @@ async function getApiData() {
   return res.json();
 }
 
-// Helper to parse meta/link tags into JSX
 function parseMetaTag(tag, index) {
   if (tag.startsWith("<meta")) {
     const attrs = [...tag.matchAll(/(\w+)=["']([^"']+)["']/g)];
@@ -26,14 +25,13 @@ function parseMetaTag(tag, index) {
     const props = Object.fromEntries(attrs.map(([_, key, val]) => [key, val]));
     return <link key={index} {...props} />;
   }
-  return null; // skip unsupported tags
+  return null;
 }
 
 export default async function RootLayout({ children }) {
   const apiData = await getApiData();
   const metaList = apiData?.data?.metaList || [];
 
-  // Extract <title>
   const titleTag = metaList.find(tag => tag.startsWith("<title>"));
   const pageTitle = titleTag
     ? titleTag.replace("<title>", "").replace("</title>", "")
@@ -47,7 +45,6 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <head>
         <title>{pageTitle}</title>
-        {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
         {otherMetaTags}
       </head>
       <body className={nunito.className}>

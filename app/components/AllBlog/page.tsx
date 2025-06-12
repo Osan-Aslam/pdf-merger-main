@@ -5,7 +5,6 @@ import placeholderImage from "../../../public/placeholder-image.svg"
 
 function AllBlog({ viewModel }) {  
   const Blogs = (viewModel?.data.blogs) ? viewModel.data.blogs : [];
-  console.log("Blogs: ",viewModel);
   return (
     <div className='container'>
       <div className='mb-5 text-center'>

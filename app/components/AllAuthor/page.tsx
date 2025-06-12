@@ -5,7 +5,6 @@ import Image from 'next/image'
 
 function AllAuthor({ viewModel }) {
 	const authors = Array.isArray(viewModel?.data.authors) ? viewModel.data.authors : [];
-	// console.log("Auhtor :", authors);
 	return (
 		<div className='container'>
 			<div className='mb-5 text-center'>
