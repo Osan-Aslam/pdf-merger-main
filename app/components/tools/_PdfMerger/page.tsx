@@ -112,32 +112,44 @@ export default function MergePdfTool({ apiResponse }) {
 		fileInputRef.current.click();
 	};
 
-	// const handleDragEnter = (event) => {
-	// 	event.preventDefault();
-	// 	event.stopPropagation();
-	// 	setDragging(true);
-	// };
+	const handleDragEnter = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+		setDragging(true);
+	};
 
-	// const handleDragLeave = (event) => {
-	// 	event.preventDefault();
-	// 	event.stopPropagation();
-	// 	setDragging(false);
-	// };
+	const handleDragLeave = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+		setDragging(false);
+	};
 
-	// const handleDragOver = (event) => {
-	// 	event.preventDefault();
-	// 	event.stopPropagation();
-	// };
+	const handleDragOver = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+	};
 
-	// const handleDrop = (event) => {
-	// 	event.preventDefault();
-	// 	event.stopPropagation();
-	// 	setDragging(false);
-	// 	const droppedFiles = Array.from(event.dataTransfer.files);
-	// 	if (droppedFiles.length > 0) {
-	// 		handleFiles(droppedFiles);
-	// 	}
-	// };
+	const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+		event.preventDefault();
+		event.stopPropagation();
+		setDragging(false);
+
+		const droppedFiles = Array.from(event.dataTransfer.files);
+		const maxSize = 30 * 1024 * 1024;
+
+		const hasLargeFile = droppedFiles.some(file => file.size > maxSize);
+		if (hasLargeFile) {
+			setAlertVisible(true);
+			return;
+		}
+
+		if (droppedFiles.length > 0) {
+			setAlertVisible(false);
+			setLoading(true);
+			handleFiles(droppedFiles);
+		}
+	};
+
 
 	const deleteFiles = () => {
 		setPdfPreviews([]);
@@ -159,11 +171,11 @@ export default function MergePdfTool({ apiResponse }) {
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const inputFiles = Array.from(event.target.files || []);
-		const maxSize = 20 * 1024 * 1024; // 20MB
+		const maxSize = 30 * 1024 * 1024;
 		const hasLargeFile = inputFiles.some(file => file.size > maxSize);
 		if (hasLargeFile) {
 			setAlertVisible(true);
-			event.target.value = ''; // reset input
+			event.target.value = '';
 			return;
 		}
 		if (inputFiles.length > 0) {
@@ -326,7 +338,7 @@ export default function MergePdfTool({ apiResponse }) {
 							<div className="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
 						</div>
 					</div>
-					<div className={`pdf-preview d-flex py-4 ${pdfPreviews.length > 0 ? 'justify-content-start' : 'justify-content-center'} ${loading ? 'custom-loader-height' : ''}`}>
+					<div className={`pdf-preview d-flex py-4 ${pdfPreviews.length > 0 ? 'justify-content-start' : 'justify-content-center'} ${loading ? 'custom-loader-height' : ''}`} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave} onDragOver={handleDragOver} onDrop={handleDrop}>
 						<div className={`d-flex align-items-center flex-column ${dragging ? "bg-[#fff8f8]" : "bg-white"} ${pdfPreviews.length > 0 || loading ? "d-none" : ""}`}>
 							<Image src={doc2Image} alt="Logo" className="mb-3" />
 							<button className="btn upload-btn mb-2"
