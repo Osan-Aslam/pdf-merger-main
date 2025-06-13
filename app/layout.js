@@ -7,13 +7,25 @@ const nunito = Nunito_Sans({ subsets: ["latin"] });
 
 // Fetch API data
 async function getApiData() {
-  const res = await fetch("http://localhost:5089/api/page", {
-    headers: { Accept: "application/json" },
-    cache: "no-store",
-  });
-  if (!res.ok) return null;
-  return res.json();
+  try {
+    const res = await fetch("http://localhost:5089/api/page", {
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      console.error("API responded with status:", res.status);
+      return { error: "Failed to fetch data. Please try again later." };
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return { error: "Unable to connect to the server. Please try again later." };
+  }
 }
+
 
 function parseMetaTag(tag, index) {
   if (tag.startsWith("<meta")) {

@@ -22,13 +22,13 @@ function Navbar({ apiResponse }) {
         <div className='d-lg-block d-none'>
           <ul className="navbar-nav justify-content-end flex-row align-items-center">
             <li className="nav-item">
-              <Link href={apiResponse?.data.menuDict?.insights_url || "#"} className="nav-link">
-                {apiResponse?.data.menuDict?.insights || "insights"}
+              <Link href={apiResponse?.data?.menuDict?.insights_url || "#"} className="nav-link">
+                {apiResponse?.data?.menuDict?.insights || "insights"}
               </Link>
             </li>
             <li className="nav-item">
-              <Link href={apiResponse?.data.menuDict.aboutus_url || "#"} className="nav-link">
-                {apiResponse?.data.menuDict?.AboutUs || "About Us"}
+              <Link href={apiResponse?.data?.menuDict?.aboutus_url || "#"} className="nav-link">
+                {apiResponse?.data?.menuDict?.AboutUs || "About Us"}
               </Link>
             </li>
             <button className="btn nav-item login-btn">
@@ -45,13 +45,13 @@ function Navbar({ apiResponse }) {
           <div className="offcanvas-body">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link href={apiResponse?.data.menuDict?.insights_url || "#"} className="nav-link">
-                  {apiResponse?.data.menuDict?.insights || "insights"}
+                <Link href={apiResponse?.data?.menuDict?.insights_url || "#"} className="nav-link">
+                  {apiResponse?.data?.menuDict?.insights || "insights"}
                 </Link>
               </li>
               <li className="nav-item">
-                <Link href={apiResponse?.data.menuDict.aboutus_url || "#"} className="nav-link">
-                  {apiResponse?.data.menuDict?.AboutUs || "About Us"}
+                <Link href={apiResponse?.data?.menuDict.aboutus_url || "#"} className="nav-link">
+                  {apiResponse?.data?.menuDict?.AboutUs || "About Us"}
                 </Link>
               </li>
               <button className="btn nav-item login-btn">
