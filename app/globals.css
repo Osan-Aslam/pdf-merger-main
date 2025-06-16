@@ -342,8 +342,13 @@ ul {
 	box-shadow: none;
 }
 
+.breadcrumb-item.active{
+	font-size: 16px;
+	font-weight: 600;
+}
+
 @media only screen and (max-width: 992px) {
-	.input-file {
-		height: 27%;
+	.breadcrumb-item, .breadcrumb-item.active{
+		font-size: 12px;
 	}
 }
